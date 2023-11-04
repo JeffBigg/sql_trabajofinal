@@ -6,6 +6,7 @@ use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Models\Category;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,7 +24,7 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('Descripcion')->required()->maxLength(100)
             ]);
     }
 
@@ -45,14 +46,14 @@ class CategoryResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -60,5 +61,5 @@ class CategoryResource extends Resource
             'create' => Pages\CreateCategory::route('/create'),
             'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
-    }    
+    }
 }
