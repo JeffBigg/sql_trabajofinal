@@ -6,11 +6,9 @@ use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Models\Category;
 use Filament\Forms;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -25,7 +23,9 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('Descripcion')->required()->maxLength(100)
+                Forms\Components\TextInput::make('description')
+                    ->required()
+                    ->maxLength(191),
             ]);
     }
 
@@ -33,9 +33,16 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('descripcion')->searchable(),
-                TextColumn::make('created_ad')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('update_ad')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true)
+                Tables\Columns\TextColumn::make('description')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -47,6 +54,9 @@ class CategoryResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ])
+            ->emptyStateActions([
+                Tables\Actions\CreateAction::make(),
             ]);
     }
 
