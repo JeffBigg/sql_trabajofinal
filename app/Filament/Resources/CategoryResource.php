@@ -34,7 +34,8 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('descripcion')->searchable(),
-                TextColumn::make('created_ad')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true)
+                TextColumn::make('created_ad')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('update_ad')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true)
             ])
             ->filters([
                 //
